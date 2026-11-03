@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Modular Dashboard — Fictional Demo</title>
+<link rel="stylesheet" href="./styles.css">
+<script type="module" src="./app.mjs"></script>
+</head>
+<body>
+<header>
+  <div><p class="eyebrow">OPEN DEVELOPMENT SANDBOX</p><h1>Modular Dashboard Lab</h1><p class="intro">Generic modules. Fictional data. Nothing connected to a real household.</p></div>
+  <div class="warning" role="note"><strong>SIMULATION ONLY</strong><span>Viewer switching is not authentication. Do not enter personal information.</span></div>
+</header>
+<main>
+<section class="toolbar" aria-label="Demo controls">
+  <label>Simulated viewer <select id="viewer"><option value="designer-one">Designer One</option><option value="designer-two">Designer Two</option></select></label>
+  <label>Layout <select id="mode"><option value="equal">Equal tiles</option><option value="mosaic">Mosaic</option><option value="grouped">Grouped</option><option value="featured">Featured + rail</option><option value="split">Split workspace</option></select></label>
+  <button id="present" type="button">Mock adult presentation</button>
+  <button id="showHidden" type="button">Restore hidden cards</button>
+  <button id="reset" type="button">Reset demo layout</button>
+</section>
+<div class="status" id="status" role="status" aria-live="polite"></div>
+<section id="attention" aria-label="Needs attention"></section>
+<section id="workspace" aria-label="Dashboard modules"></section>
+</main>
+<footer>Original public sandbox • local-only UI preferences • no real accounts, secrets, connectors or production services.</footer>
+</body>
+</html>
