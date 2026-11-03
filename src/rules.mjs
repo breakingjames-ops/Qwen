@@ -17,7 +17,7 @@ export class RulesEngine {
     const trace=[],accepted=[];
     for(const rule of this._rules){
       const card=Array.isArray(cards)?cards.find(c=>c.id===rule.moduleId):undefined;
-      const matches=Boolean(card && card.status!=="stale" && card.status!=="revoked" &&
+      const matches=Boolean(card && (card.status!=="stale" || rule.action==="hide") && card.status!=="revoked" &&
         (!rule.when?.weekday || rule.when.weekday===context.weekday) &&
         (!rule.when?.status || rule.when.status===card.status));
       trace.push(Object.freeze({ruleId:rule.id,matches,action:rule.action}));
