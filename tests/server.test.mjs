@@ -41,7 +41,7 @@ test("server maintains synthetic activity history", () => {
   const server = new MockServer({ now: () => now });
   server.ingest({ id: "a", title: "A", allowedViewers: ["v1"] });
   server.revoke("a");
-  server.saveLayout("v1", { mode: "equal" });
+  server.saveLayout("v1", { mode: "equal" }, { expectedToken: "v0" });
   const history = server.getHistory();
   assert.equal(history.length, 3);
   assert.equal(history[0].action, "ingest");
