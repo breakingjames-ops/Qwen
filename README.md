@@ -14,7 +14,7 @@ A **generic, synthetic-data** experiment for a modular household/project dashboa
 
 ## Qwen's assignment
 
-Read [QWEN.md](QWEN.md) and [the build plan](docs/BUILD_PLAN.md). Continue implementation on a separate branch in this public repo. Supply tests, screenshots and a pull request. Do not add external services, API keys, production integrations, or subscriptions.
+Start with the [copyable Qwen build prompt](prompts/QWEN_BUILD.md), then run the [Grok audit prompt](prompts/GROK_AUDIT.md) **after actual code is ready**. Follow the [five-stage handoff](docs/REVIEW_PIPELINE.md). Read [QWEN.md](QWEN.md) and [the build plan](docs/BUILD_PLAN.md). Continue implementation on a separate branch in this public repo. Supply tests, screenshots and a pull request. Do not add external services, API keys, production integrations, or subscriptions.
 
 Qwen's web chatbot does **not automatically gain GitHub write access** just because a repository is public. For autonomous commits, use Qwen Code in a development workspace with a separately verified **free** model provider. Otherwise, ask the web chatbot for a patch and have an authorized developer apply it. Do not set up any paid API or billable workflow.
 
@@ -31,6 +31,6 @@ This repo's existing prototype implements **only synthetic UI and pure model uti
 
 ## Review path
 
-Qwen proposes public-repo PRs → independent code/security review → [review handoff](docs/AMANDA_REVIEW.md) → authorized owners adapt selected **code only** into the separate private application. No automatic cross-repo transfer, merge, deployment or data sharing.
+Qwen proposes public-repo PRs → independent code/security review → [independent implementation review](docs/IMPLEMENTATION_REVIEW.md) → authorized owners adapt selected **code only** into the separate private application. No automatic cross-repo transfer, merge, deployment or data sharing.
 
 See [SECURITY.md](SECURITY.md) before contributing. This experiment must remain 100% free; if the only execution path becomes paid, stop rather than proceeding.
