@@ -5,7 +5,7 @@
   "type": "module",
   "description": "Fictional-data modular dashboard coding sandbox",
   "scripts": {
-    "check": "node --check src/model.mjs && node --check src/fixtures.mjs && node --check demo/app.mjs && node --check scripts/public-safety.mjs && node scripts/public-safety.mjs",
+    "check": "node --check src/model.mjs && node --check src/fixtures.mjs && node --check src/registry.mjs && node --check src/mock-server.mjs && node --check src/rules.mjs && node --check src/history.mjs && node --check demo/app.mjs && node --check scripts/public-safety.mjs && node scripts/public-safety.mjs",
     "test": "node --test tests/*.test.mjs"
   }
 }

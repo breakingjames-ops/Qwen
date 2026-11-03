@@ -12,7 +12,7 @@ test("registry rejects invalid definitions", () => {
 
 test("registry stores and retrieves frozen definitions", () => {
   const reg = new ModuleRegistry();
-  const def = { id: "test", kind: "widget", capabilities: ["summary"], presentationEligible: true, title: "Test", group: "A" };
+  const def = { id: "test", kind: "widget", capabilities: ["summary", "presentation"], presentationEligible: true, title: "Test", group: "A" };
   reg.register(def);
   const stored = reg.get("test");
   assert.deepEqual(stored, def);
