@@ -5,11 +5,13 @@ const SAFE_FIELDS = Object.freeze(["id", "kind", "title", "group", "summary", "n
 export function projectForViewer(records, viewer, now = new Date()) {
   if (!Array.isArray(records) || typeof viewer !== "string" || !viewer) return [];
   const instant = Number(new Date(now));
+  if (!Number.isFinite(instant)) return [];
   return records.flatMap(record => {
     if (!record || !Array.isArray(record.allowedViewers) || !record.allowedViewers.includes(viewer) || record.revoked === true) return [];
     const safe = Object.fromEntries(SAFE_FIELDS.filter(field => Object.hasOwn(record, field)).map(field => [field, record[field]]));
     if (typeof safe.id !== "string" || typeof safe.title !== "string") return [];
-    if (safe.validUntil && Number(new Date(safe.validUntil)) <= instant) {
+    const expiry = safe.validUntil == null ? null : Number(new Date(safe.validUntil));
+    if (expiry !== null && (!Number.isFinite(expiry) || expiry <= instant)) {
       safe.summary = "Source expired; verification required.";
       safe.nextAction = "";
       safe.status = "stale";

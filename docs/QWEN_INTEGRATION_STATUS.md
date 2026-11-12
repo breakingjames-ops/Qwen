@@ -20,6 +20,10 @@ The browser candidate builds on public review head `d997e5302f3ae19b272b0e776215
 - Rebuilt card controls retain keyboard focus. Focus view returns to its actual opener; icon controls have descriptive accessible names.
 - The mock presentation moves focus to its exit control, makes the background inert, and returns to the presentation button after explicit exit, Escape or a native fullscreen exit. This is UI behavior, not authentication.
 
+## Pure projection freshness follow-up
+
+The exported `projectForViewer` helper now returns no records when its comparison time is invalid and marks malformed, explicitly supplied expiry values as stale, clearing action details. Two regressions reproduced the prior behavior: malformed expiry preserved a verified action, and an invalid comparison time bypassed expiry. An additional boundary case preserves exact-expiry withholding and the existing optional-expiry contract. This matches the mock server's existing malformed-date behavior for the documented string timestamps; the browser demo already calls the mock server.
+
 ## Browser verification route
 
 The existing CI runs `scripts/check_demo_browser.py` against a local server containing only this repository's fictional fixtures. It uses the runner's installed Chromium browser and a separate virtual environment pinned to `playwright==1.62.0`; no browser installer, model call, secret, real source or deployment is added. The public-data scan also covers the Python script.
