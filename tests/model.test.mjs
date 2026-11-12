@@ -22,6 +22,34 @@ test("expiry withholds action details",()=>{
   assert.equal(inventory.nextAction,"");
   assert.equal(inventory.dueAt,null);
 });
+test("malformed expiry withholds actions instead of preserving a verified record",()=>{
+  for (const validUntil of ["", "not-a-timestamp"]) {
+    const record={id:"x",title:"Demo",allowedViewers:["designer-one"],summary:"Synthetic summary",nextAction:"Synthetic action",status:"verified",dueAt:now.toISOString(),validUntil};
+    const [projected]=projectForViewer([record],"designer-one",now);
+    assert.equal(projected.status,"stale");
+    assert.equal(projected.summary,"Source expired; verification required.");
+    assert.equal(projected.nextAction,"");
+    assert.equal(projected.dueAt,null);
+    assert.equal(record.status,"verified");
+  }
+});
+test("an invalid projection time cannot bypass expiry",()=>{
+  const record={id:"x",title:"Demo",allowedViewers:["designer-one"],nextAction:"Synthetic action",status:"verified",validUntil:now.toISOString()};
+  for (const invalidNow of ["not-a-timestamp", new Date(NaN)]) {
+    assert.deepEqual(projectForViewer([record],"designer-one",invalidNow),[]);
+  }
+});
+test("expiry is exclusive and omitted expiry preserves the existing optional contract",()=>{
+  const record={id:"x",title:"Demo",allowedViewers:["designer-one"],nextAction:"Synthetic action",status:"verified"};
+  for (const delta of [-1,0,1]) {
+    const [projected]=projectForViewer([{...record,validUntil:new Date(Number(now)+delta).toISOString()}],"designer-one",now);
+    assert.equal(projected.status,delta>0?"verified":"stale");
+    assert.equal(projected.nextAction,delta>0?"Synthetic action":"");
+  }
+  for (const validUntil of [undefined,null]) {
+    assert.equal(projectForViewer([{...record,validUntil}],"designer-one",now)[0].status,"verified");
+  }
+});
 test("revocation removes records",()=>assert.equal(projectForViewer([{id:"z",title:"Z",allowedViewers:["designer-one"],revoked:true}],"designer-one",now).length,0));
 test("layout normalizes unknown ids, invalid modes, and invalid spans",()=>{
   const l=cleanLayout({mode:"unsafe",order:["bogus","groceries","groceries"],spans:{groceries:100},hidden:["bogus"]},a);

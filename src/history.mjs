@@ -12,7 +12,10 @@ export class LayoutStateManager {
       if(!data||typeof data!=="object"||Array.isArray(data))return;
       for(const [viewer,s] of Object.entries(data)){
         if(!s||!Array.isArray(s.history)||!Number.isInteger(s.index)||s.index<-1||s.index>=s.history.length)continue;
-        this._stacks.set(viewer,{history:clone(s.history.slice(-this._maxHistory)),index:Math.min(s.index,this._maxHistory-1)});
+        // Keep the selected snapshot when a smaller limit trims persisted history.
+        // Prefer the newest window, moving it back only to retain that selection.
+        const start=Math.min(Math.max(0,s.history.length-this._maxHistory),Math.max(0,s.index));
+        this._stacks.set(viewer,{history:clone(s.history.slice(start,start+this._maxHistory)),index:s.index-start});
       }
     }catch{/*Corrupt demo storage: empty state; do not claim successful restore.*/}
   }
