@@ -15,6 +15,7 @@ This branch is an **independently revised candidate**, not Qwen's unchanged subm
 The browser candidate builds on public review head `d997e5302f3ae19b272b0e776215ca1a0c607fb3`; the original submissions and existing draft stack remain separate.
 
 - Each simulated viewer now starts with an explicit initial history entry. Undo can recover the very first edit, including the first edit after reset. Reset still discards earlier history.
+- Reloading saved history with a smaller history limit retains the selected layout and adjusts undo/redo positions to the retained window. A history limit of one still preserves each simulated viewer's own selection. Two regression cases reproduced incorrect restored layouts before this correction.
 - A blocked browser-storage getter falls back to an in-memory demo and explains its limited persistence. Existing read/write failures remain nonfatal.
 - Rebuilt card controls retain keyboard focus. Focus view returns to its actual opener; icon controls have descriptive accessible names.
 - The mock presentation moves focus to its exit control, makes the background inert, and returns to the presentation button after explicit exit, Escape or a native fullscreen exit. This is UI behavior, not authentication.
