@@ -12,6 +12,8 @@ A **generic, synthetic-data** experiment for a modular household/project dashboa
 4. Switch **simulated** designers; toggle equal/mosaic/grouped/split modes; resize/reorder/hide cards; open focus and a mock adult presentation; reset the layout.
 5. All settings are local-device demo preferences. No identity verification, persistence service, or private-data security is implemented.
 
+The [integration status](docs/QWEN_INTEGRATION_STATUS.md#browser-verification-route) describes the optional local Chromium acceptance command and the existing CI browser gate. Python/Playwright is needed only for those browser checks, not to run the demo or its Node tests. Verify the exact PR's CI result before treating a check as passed; physical-device and full accessibility acceptance remain separate.
+
 ## Qwen's assignment
 
 Start with the [copyable Qwen build prompt](prompts/QWEN_BUILD.md), then run the [Grok audit prompt](prompts/GROK_AUDIT.md) **after actual code is ready**. Follow the [five-stage handoff](docs/REVIEW_PIPELINE.md). Read [QWEN.md](QWEN.md) and [the build plan](docs/BUILD_PLAN.md). Continue implementation on a separate branch in this public repo. Supply tests, screenshots and a pull request. Do not add external services, API keys, production integrations, or subscriptions.

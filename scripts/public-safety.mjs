@@ -18,7 +18,7 @@ function walk(dir){for(const entry of readdirSync(dir,{withFileTypes:true})){if(
  if(entry.isDirectory())walk(p);
  else if(entry.isFile()){
    if(badNames.test("/"+name))errors.push(name+": forbidden filename");
-   if(!/\.(?:md|mjs|js|json|html|css|yml|yaml|txt)$/.test(entry.name))continue;
+   if(!/\.(?:md|mjs|js|py|json|html|css|yml|yaml|txt)$/.test(entry.name))continue;
    count++;const body=readFileSync(p,"utf8");for(const [regex,reason]of patterns){regex.lastIndex=0;
    if(regex.test(body))errors.push(name+": "+reason);}
  }

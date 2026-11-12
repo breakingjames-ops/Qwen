@@ -3,7 +3,7 @@ on:
   push:
     branches: [main]
   pull_request:
-    branches: [main, qwen/batch-2-mock-server]
+    branches: [main, qwen/batch-2-mock-server, review/qwen-batches-1-3-integrated]
 permissions:
   contents: read
 jobs:
@@ -16,4 +16,19 @@ jobs:
           node-version: '22'
       - run: npm run check
       - run: npm test
+      - name: Check the fictional demo in the installed Chromium browser
+        env:
+          QWEN_BROWSER_ARTIFACT_DIR: ${{ runner.temp }}/qwen-browser-artifacts
+        run: |
+          python3 -m venv "$RUNNER_TEMP/qwen-browser-check"
+          "$RUNNER_TEMP/qwen-browser-check/bin/python" -m pip install playwright==1.62.0
+          "$RUNNER_TEMP/qwen-browser-check/bin/python" scripts/check_demo_browser.py
+      - name: Save synthetic browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qwen-browser-acceptance
+          path: ${{ runner.temp }}/qwen-browser-artifacts
+          if-no-files-found: ignore
+          retention-days: 7
 # No AI/model API, external secrets, build deployment, or scheduled workflow.
